@@ -15,3 +15,17 @@ A service describing missing pets, pet rewards (brokered/managed by the service)
 - local scalability (per-city), but possibly scaling out to other cities
 - company wants to create a larger social community around pets
 - potential ad revenue from partners like pet stores have the potential to make millions
+
+
+## Engineering: 
+ ### C4 - Level 1
+ ![C4-LEVEL1](./engineering/C4-level1.png)   
+ 
+### C4 - Level 2 
+ ![C4-LEVEL 2](./engineering/C4-level2.png)
+
+### C4 - Level 3
+![C4-LEVEL 3](./engineering/C4-level3.png)
+
+### Architecture 
+![Architecture](./engineering/architecture.png)

@@ -34,7 +34,7 @@ namespace Person.Functions
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
                 var createPersonRequest = JsonConvert.DeserializeObject<CreatePersonRequest>(requestBody);
-                
+
                 log.LogInformation("[CREATE_PERSON_HANDLER] Validating createPersonRequest...");
 
                 var validationResult = await new CreatePersonRequestValidator().ValidateAsync(createPersonRequest);
@@ -61,12 +61,20 @@ namespace Person.Functions
             {
                 log.LogError(exception.Message);
 
-                return
-                    BuildResponse.Failure(
-                        exception.Message.Equals(
-                            PersonException.PersonExceptions[PersonExceptionType.PersonAlreadyExists])
-                            ? HttpStatusCode.BadRequest
-                            : HttpStatusCode.InternalServerError, exception.Message);
+                if (exception.Message.Equals(
+                    PersonException.PersonExceptions[PersonExceptionType.PersonAlreadyExists]))
+
+                    return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error
+                    {
+                        Message = exception.Message,
+                        Type = PersonExceptionType.PersonAlreadyExists
+                    });
+
+
+                return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error
+                {
+                    Message = exception.Message
+                });
             }
         }
     }

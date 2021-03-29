@@ -27,6 +27,7 @@ namespace PersonApi
         }
 
 #nullable disable
+        
         [BsonElement("email")] public readonly string Email;
 
         [BsonElement("firstName")] public readonly string FirstName;

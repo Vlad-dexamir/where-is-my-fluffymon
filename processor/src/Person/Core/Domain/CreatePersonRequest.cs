@@ -4,7 +4,9 @@ namespace PersonApi
 {
     public class CreatePersonRequest
     {
+        
 #nullable disable
+        
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

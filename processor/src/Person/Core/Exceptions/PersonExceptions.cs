@@ -14,7 +14,12 @@ namespace PersonApi
         PersonPasswordIsRequired,
         PersonPasswordIsInvalid,
         PersonLocationIsRequired,
-        PersonPhoneNumberIsInvalid
+        PersonPhoneNumberIsInvalid,
+        PersonAlreadyExists,
+        PersonJwtIsRequired,
+        PersonJwtIsInvalid,
+        AuthorizationHeaderIsRequired,
+        AuthorizationHeaderMissingBearer
     }
 
     public class PersonException : Exception
@@ -48,7 +53,15 @@ namespace PersonApi
                 {
                     PersonExceptionType.PersonPhoneNumberIsInvalid,
                     $"phoneNumber must have exactly {Person.PersonConstraints["PHONE_NUMBER_LENGTH"].ToString()} characters"
-                }
+                },
+
+                {PersonExceptionType.PersonAlreadyExists, "User already exists"},
+
+                {PersonExceptionType.PersonJwtIsRequired, "Request Headers does not contain Authorization"},
+                {PersonExceptionType.PersonJwtIsInvalid, "JWT has expired or stores an invalid value"},
+
+                {PersonExceptionType.AuthorizationHeaderIsRequired, "Authorization Header is required"},
+                {PersonExceptionType.AuthorizationHeaderMissingBearer, "Missing Bearer from Authorization Token"}
             };
 
         public PersonException()

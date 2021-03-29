@@ -10,7 +10,7 @@ namespace PersonApi
 
         public string Email { get; }
 
-        public string Password { get; }
+        public string Password { get; set; }
 
         public PersonLocation Location { get; }
 
@@ -58,7 +58,7 @@ namespace PersonApi
                 .MaximumLength(Person.PersonConstraints["PASSWORD_MAX"])
                 .WithMessage(PersonException.PersonExceptions[PersonExceptionType.PersonPasswordIsInvalid]);
 
-            RuleFor(expression: request => request.Location)
+            RuleFor(request => request.Location)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage(PersonException.PersonExceptions[PersonExceptionType.PersonLocationIsRequired]);

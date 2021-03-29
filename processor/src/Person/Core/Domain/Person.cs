@@ -1,21 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace PersonApi
 {
     public class Person
     {
-        public static Person Create(CreatePersonRequest createPersonRequest)
-        {
-            return new Person(createPersonRequest);
-        }
-
-        public static readonly Regex PersonEmailPattern = new Regex(
+        public static readonly Regex PersonEmailPattern = new(
             @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
         );
 
-        public static readonly Dictionary<string, int> PersonConstraints = new Dictionary<string, int>
+        public static readonly Dictionary<string, int> PersonConstraints = new()
         {
             {"NAME_MIN", 3},
             {"NAME_MAX", 20},
@@ -24,23 +21,24 @@ namespace PersonApi
             {"PHONE_NUMBER_LENGTH", 10}
         };
 
+        [BsonElement("email")] public readonly string Email;
+
+        [BsonElement("firstName")] public readonly string FirstName;
+
+        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
         public readonly string Id;
 
-        public readonly string FirstName;
+        [BsonElement("isAdmin")] public readonly bool IsAdmin;
 
-        public readonly string LastName;
+        [BsonElement("lastName")] public readonly string LastName;
 
-        public readonly string Email;
+        [BsonElement("location")] public readonly PersonLocation Location;
 
-        public readonly string Password;
+        [BsonElement("password")] public readonly string Password;
 
-        public readonly PersonLocation Location;
+        [BsonElement("phoneNumber")] public readonly string? PhoneNumber;
 
-        public readonly string? PhoneNumber;
-
-        public readonly string? ProfilePicture;
-
-        public readonly bool IsAdmin;
+        [BsonElement("profilePicture")] public readonly string? ProfilePicture;
 
         private Person(CreatePersonRequest payload)
         {
@@ -56,17 +54,16 @@ namespace PersonApi
 
             Location = payload.Location;
 
-            if (!string.IsNullOrEmpty(payload.PhoneNumber))
-            {
-                PhoneNumber = payload.PhoneNumber;
-            }
+            if (!string.IsNullOrEmpty(payload.PhoneNumber)) PhoneNumber = payload.PhoneNumber;
 
-            if (!string.IsNullOrEmpty(payload.ProfilePicture))
-            {
-                ProfilePicture = payload.ProfilePicture;
-            }
+            if (!string.IsNullOrEmpty(payload.ProfilePicture)) ProfilePicture = payload.ProfilePicture;
 
             IsAdmin = false;
+        }
+
+        public static Person Create(CreatePersonRequest createPersonRequest)
+        {
+            return new(createPersonRequest);
         }
     }
 }

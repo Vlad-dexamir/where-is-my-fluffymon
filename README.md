@@ -1,37 +1,26 @@
 # Where's Fluffymon?
+This is a serverless web application based on Next.js and .Net Core with Azure Functions
+## Setup for processor
+1) Install .Net SDK (v3.10, v5) from https://dotnet.microsoft.com/download/dotnet/5.0 .
+2) Install Azure Functions Core Tool from https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash .
+3) Clone repository.
 
-## Description
-A service describing missing pets, pet rewards (brokered/managed by the service), and location data points (GPS) of pet sightings using augmented reality to overlay last-seen pet locations
+### Person Microservice:
+- Create a file named `local.settings.json` with:
 
-## Functional Requirements:
-- users interested in finding pets register on the site
-- anyone can see a list of pets missing near to their location
-- pet finders can post 'pet found' messages (with mandatory photo proof) and collect rewards on confirmation from pet owners 
-- users can comment on pet missing entries, offering data points (sighted, area checked with no results, etc)
-- mobile device accessibility
+```{
+"IsEncrypted": false,
+"Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "COSMOS_DB_CONNECTION_STRING": AZURE PORTAL -> AZURE COSMOS DB -> where-is-my-fluffymon-dev -> ConnectionString,
+    "PERSON_DATABASE_NAME": AZURE PORTAL -> AZURE COSMOS DB -> where-is-my-fluffymon-dev -> Data Explorer -> Data,
+    "PERSON_COLLECTION_NAME": AZURE PORTAL -> AZURE COSMOS DB -> where-is-my-fluffymon-dev -> Data Explorer -> Data,
+    "JWT_KEY": AZURE PORTAL -> FUNCTION APP -> where-is-my-fluffymon-dev -> CONFIGURATION -> JWT_KEY
+    },
+"Host": {
+    "CORS": "*"
+    }
+}
+```
 
-## Additional Context:
-- one of a host of AR services being launched by parent company
-- local scalability (per-city), but possibly scaling out to other cities
-- company wants to create a larger social community around pets
-- potential ad revenue from partners like pet stores have the potential to make millions
-
-## Non-functional Requirements: 
-- Clean architecture
-- Clean Code
-- Scalability
-- Unit Tests and Test Coverage over 80%
-- APIs Performance
-
-## Engineering: 
- ### C4 - Level 1
- ![C4-LEVEL1](./engineering/C4-level1.png)   
- 
-### C4 - Level 2 
- ![C4-LEVEL 2](./engineering/C4-level2.png)
-
-### C4 - Level 3
-![C4-LEVEL 3](./engineering/C4-level3.png)
-
-### Architecture 
-![Architecture](./engineering/architecture.png)

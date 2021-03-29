@@ -11,7 +11,7 @@ namespace PersonApi
             {
                 var foundUser = await personRepository.GetPersonByEmail(createPersonRequest.Email);
 
-                if (!foundUser.Equals(null)) throw new PersonException(PersonExceptionType.PersonAlreadyExists);
+                if (foundUser != null) throw new PersonException(PersonExceptionType.PersonAlreadyExists);
 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(createPersonRequest.Password);
 

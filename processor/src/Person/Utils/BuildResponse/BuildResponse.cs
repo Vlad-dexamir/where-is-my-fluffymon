@@ -1,17 +1,18 @@
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Person.Utils.BuildResponse
 {
     public static class BuildResponse
     {
-        public static Response Success(object? body)
+        public static object Success(object? body)
         {
-            return Response.Create((int) HttpStatusCode.OK, body);
+            return body != null ? new OkObjectResult(body) : new OkResult();
         }
 
-        public static Response Failure(int statusCode, object? body)
+        public static object Failure(HttpStatusCode statusCode, object? body)
         {
-            return Response.Create(statusCode, body);
+            return new ObjectResult(body) {StatusCode = (int) statusCode};
         }
     }
 }

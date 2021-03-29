@@ -4,19 +4,22 @@ namespace PersonApi
 {
     public class CreatePersonRequest
     {
-        public string FirstName { get; }
+#nullable disable
+        public string FirstName { get; set; }
 
-        public string LastName { get; }
+        public string LastName { get; set; }
 
-        public string Email { get; }
+        public string Email { get; set; }
 
         public string Password { get; set; }
 
-        public PersonLocation Location { get; }
+        public PersonLocation Location { get; set; }
 
-        public string? PhoneNumber => null;
+#nullable enable
 
-        public string? ProfilePicture => null;
+        public string? PhoneNumber { get; set; }
+
+        public string? ProfilePicture { get; set; }
     }
 
     public class CreatePersonRequestValidator : AbstractValidator<CreatePersonRequest>
@@ -62,10 +65,6 @@ namespace PersonApi
                 .NotEmpty()
                 .NotNull()
                 .WithMessage(PersonException.PersonExceptions[PersonExceptionType.PersonLocationIsRequired]);
-
-            RuleFor(request => request.PhoneNumber.Length)
-                .Equal(Person.PersonConstraints["PHONE_NUMBER_LENGTH"])
-                .WithMessage(PersonException.PersonExceptions[PersonExceptionType.PersonPhoneNumberIsInvalid]);
         }
     }
 }

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace PersonApi
 {
@@ -21,11 +21,17 @@ namespace PersonApi
             {"PHONE_NUMBER_LENGTH", 10}
         };
 
+        public static Person Create(CreatePersonRequest createPersonRequest)
+        {
+            return new(createPersonRequest);
+        }
+
+#nullable disable
         [BsonElement("email")] public readonly string Email;
 
         [BsonElement("firstName")] public readonly string FirstName;
 
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
+        [BsonId] [BsonRepresentation(BsonType.String)]
         public readonly string Id;
 
         [BsonElement("isAdmin")] public readonly bool IsAdmin;
@@ -35,6 +41,8 @@ namespace PersonApi
         [BsonElement("location")] public readonly PersonLocation Location;
 
         [BsonElement("password")] public readonly string Password;
+
+#nullable enable
 
         [BsonElement("phoneNumber")] public readonly string? PhoneNumber;
 
@@ -59,11 +67,6 @@ namespace PersonApi
             if (!string.IsNullOrEmpty(payload.ProfilePicture)) ProfilePicture = payload.ProfilePicture;
 
             IsAdmin = false;
-        }
-
-        public static Person Create(CreatePersonRequest createPersonRequest)
-        {
-            return new(createPersonRequest);
         }
     }
 }

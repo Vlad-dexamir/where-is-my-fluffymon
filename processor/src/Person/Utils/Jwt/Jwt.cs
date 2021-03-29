@@ -27,8 +27,8 @@ namespace Person.Utils.Jwt
 
         public string Encode(string userId)
         {
-            var now = DateTime.Now;
-            var expirationTime = now.AddHours(1).Ticks;
+            var now = DateTimeOffset.Now;
+            var expirationTime = now.AddHours(1).ToUnixTimeSeconds();
 
             var payload = JwtPayload.Create(userId, expirationTime);
 

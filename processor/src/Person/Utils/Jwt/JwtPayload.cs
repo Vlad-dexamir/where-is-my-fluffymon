@@ -2,6 +2,7 @@ namespace Person.Utils.Jwt
 {
     public class JwtPayload
     {
+#nullable disable
         public readonly long ExpirationTime;
 
         public readonly string UserId;

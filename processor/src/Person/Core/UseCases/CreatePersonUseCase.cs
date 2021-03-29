@@ -15,13 +15,24 @@ namespace PersonApi
 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(createPersonRequest.Password);
 
-                createPersonRequest.Password = hashedPassword;
+                var personId = Guid.NewGuid().ToString();
 
-                var personToCreate = Person.Create(createPersonRequest);
+                var personToCreate = new Person
+                {
+                    Id = personId,
+                    PersonId = personId,
+                    FirstName = createPersonRequest.FirstName,
+                    LastName = createPersonRequest.LastName,
+                    Email = createPersonRequest.Email,
+                    Password = hashedPassword,
+                    PhoneNumber = createPersonRequest.PhoneNumber,
+                    Location = createPersonRequest.Location,
+                    ProfilePicture = createPersonRequest.ProfilePicture
+                };
 
                 var createdPerson = await personRepository.CreatePerson(personToCreate);
 
-                return new Jwt().Encode(createdPerson.Id);
+                return new Jwt().Encode(createdPerson.PersonId);
             };
     }
 }

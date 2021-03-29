@@ -40,9 +40,9 @@ namespace PersonApi
             return person;
         }
 
-        public async Task<Person> GetPerson(string id)
+        public async Task<Person> GetPerson(string personId)
         {
-            var foundPerson = await _people.FindAsync(person => person.Id == id);
+            var foundPerson = await _people.FindAsync(person => person.PersonId == personId);
 
             return foundPerson.FirstOrDefault();
         }

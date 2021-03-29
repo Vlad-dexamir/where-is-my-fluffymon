@@ -2,10 +2,21 @@ namespace PersonApi
 {
     public class Error
     {
-        public PersonExceptionType? Type { get; set; }
-        
+        public static Error Create(string message, string type = PersonExceptionType.PersonError)
+        {
+            return new(message, type);
+        }
+
 #nullable disable
-        
-        public string Message { get; set; }
+        public readonly string Message;
+
+#nullable enable
+        public readonly string Type;
+
+        private Error(string message, string type)
+        {
+            Message = message;
+            Type = type;
+        }
     }
 }

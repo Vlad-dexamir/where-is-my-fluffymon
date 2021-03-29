@@ -61,20 +61,18 @@ namespace Person.Functions
             {
                 log.LogError(exception.Message);
 
-                if (exception.Message.Equals(
-                    PersonException.PersonExceptions[PersonExceptionType.PersonAlreadyExists]))
+                if (exception.Message
+                    .Equals(PersonException.Exceptions[PersonExceptionType.PersonAlreadyExists])
+                )
 
-                    return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error
-                    {
-                        Message = exception.Message,
-                        Type = PersonExceptionType.PersonAlreadyExists
-                    });
+                    return BuildResponse.Failure(HttpStatusCode.BadRequest, Error.Create(
+                        exception.Message,
+                        PersonExceptionType.PersonAlreadyExists
+                    ));
 
-
-                return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error
-                {
-                    Message = exception.Message
-                });
+                return BuildResponse.Failure(HttpStatusCode.InternalServerError, Error.Create(
+                    exception.Message
+                ));
             }
         }
     }

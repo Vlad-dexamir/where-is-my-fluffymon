@@ -30,26 +30,27 @@ namespace Person.Functions
 
                 var person = await GetPersonUseCase.Execute(_personRepository, personId);
 
+                log.LogInformation(
+                    $"[GET_PERSON_HANDLER] Person with personId:${personId} retrieved successfully");
+
                 return BuildResponse.Success(person);
             }
             catch (Exception exception)
             {
                 log.LogError(exception.Message);
 
-                if (exception.Message.Equals(
-                    PersonException.PersonExceptions[PersonExceptionType.PersonDoesNotExist]))
+                if (exception.Message
+                    .Equals(PersonException.Exceptions[PersonExceptionType.PersonDoesNotExist])
+                )
 
-                    return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error
-                    {
-                        Message = exception.Message,
-                        Type = PersonExceptionType.PersonDoesNotExist
-                    });
+                    return BuildResponse.Failure(HttpStatusCode.BadRequest, Error.Create(
+                        exception.Message,
+                        PersonExceptionType.PersonDoesNotExist
+                    ));
 
-
-                return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error
-                {
-                    Message = exception.Message
-                });
+                return BuildResponse.Failure(HttpStatusCode.InternalServerError, Error.Create(
+                    exception.Message
+                ));
             }
         }
     }

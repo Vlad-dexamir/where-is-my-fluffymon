@@ -22,15 +22,12 @@ namespace Person.Utils.Jwt
 
             _jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? string.Empty;
 
-            if (string.IsNullOrEmpty(_jwtKey)) throw new Exception("Please provide JWT_KEY");
+            if (string.IsNullOrEmpty(_jwtKey)) throw new Exception("Please supply the JWT_KEY");
         }
 
         public string Encode(string userId)
         {
-            var now = DateTimeOffset.Now;
-            var expirationTime = now.AddHours(1).ToUnixTimeSeconds();
-
-            var payload = JwtPayload.Create(userId, expirationTime);
+            var payload = JwtPayload.Create(userId);
 
             return _jwtEncoder.Encode(payload, _jwtKey);
         }

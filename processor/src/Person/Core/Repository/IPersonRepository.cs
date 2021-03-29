@@ -7,7 +7,7 @@ namespace PersonApi
     {
         public Task<Person> CreatePerson(Person person);
         
-        public Task<Person> GetPerson(string id);
+        public Task<Person> GetPerson(string personId);
         
         public Task<Person> GetPersonByEmail(string email);
         

@@ -21,7 +21,7 @@ namespace PersonApi
 
                 var createdPerson = await personRepository.CreatePerson(personToCreate);
 
-                return new Jwt().Encode(createdPerson.Id);
+                return new Jwt().Encode(createdPerson.PersonId);
             };
     }
 }

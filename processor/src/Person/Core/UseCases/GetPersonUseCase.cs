@@ -5,9 +5,11 @@ namespace PersonApi
 {
     public static class GetPersonUseCase
     {
-        public static Func<IPersonRepository, string, Task<PersonDto>> Execute = async (personRepository, personId) =>
+        public static readonly Func<IPersonRepository, string, Task<PersonDto>> Execute = 
+            async (personRepository, personId) =>
         {
             var foundPerson = await personRepository.GetPerson(personId);
+            
             if (foundPerson == null)
             {
                 throw new PersonException(PersonExceptionType.PersonDoesNotExist);
@@ -15,6 +17,7 @@ namespace PersonApi
 
             return new PersonDto
             {
+                PersonId = foundPerson.PersonId,
                 FirstName = foundPerson.FirstName,
                 LastName = foundPerson.LastName,
                 Email = foundPerson.Email,

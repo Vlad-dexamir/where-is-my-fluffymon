@@ -19,7 +19,8 @@ namespace PersonApi
         PersonJwtIsRequired,
         PersonJwtIsInvalid,
         AuthorizationHeaderIsRequired,
-        AuthorizationHeaderMissingBearer
+        AuthorizationHeaderMissingBearer,
+        PersonDoesNotExist
     }
 
     public class PersonException : Exception
@@ -56,12 +57,13 @@ namespace PersonApi
                 },
 
                 {PersonExceptionType.PersonAlreadyExists, "User already exists"},
+                {PersonExceptionType.PersonDoesNotExist, "User does not exists"},
 
                 {PersonExceptionType.PersonJwtIsRequired, "Request Headers does not contain Authorization"},
                 {PersonExceptionType.PersonJwtIsInvalid, "JWT has expired or stores an invalid value"},
 
                 {PersonExceptionType.AuthorizationHeaderIsRequired, "Authorization Header is required"},
-                {PersonExceptionType.AuthorizationHeaderMissingBearer, "Missing Bearer from Authorization Token"}
+                {PersonExceptionType.AuthorizationHeaderMissingBearer, "Missing Bearer from Authorization Token"},
             };
 
         public PersonException()

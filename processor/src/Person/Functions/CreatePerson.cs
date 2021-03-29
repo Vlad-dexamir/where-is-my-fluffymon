@@ -34,15 +34,11 @@ namespace Person.Functions
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
                 var createPersonRequest = JsonConvert.DeserializeObject<CreatePersonRequest>(requestBody);
-
-                log.LogInformation("[CREATE_PERSON_HANDLER] createPersonRequest:" +
-                                   $"{createPersonRequest.FirstName}, {createPersonRequest.LastName}, {createPersonRequest.Email}, {createPersonRequest.Password}, {createPersonRequest.Location}");
-
+                
                 log.LogInformation("[CREATE_PERSON_HANDLER] Validating createPersonRequest...");
 
                 var validationResult = await new CreatePersonRequestValidator().ValidateAsync(createPersonRequest);
 
-                log.LogInformation(validationResult.ToString());
                 if (!validationResult.IsValid)
                     return BuildResponse.Failure(
                         HttpStatusCode.BadRequest,
@@ -63,7 +59,7 @@ namespace Person.Functions
             }
             catch (Exception exception)
             {
-                log.LogInformation(exception.Message);
+                log.LogError(exception.Message);
 
                 return
                     BuildResponse.Failure(

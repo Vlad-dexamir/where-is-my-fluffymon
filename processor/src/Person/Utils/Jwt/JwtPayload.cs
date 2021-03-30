@@ -4,16 +4,11 @@ namespace Person.Utils.Jwt
 {
     public class JwtPayload
     {
-        public static JwtPayload Create(string userId)
-        {
-            return new(userId);
-        }
-
 #nullable disable
         public readonly long ExpirationTime;
         public readonly string UserId;
 
-        private JwtPayload(string userId)
+        public JwtPayload(string userId)
         {
             UserId = userId;
 

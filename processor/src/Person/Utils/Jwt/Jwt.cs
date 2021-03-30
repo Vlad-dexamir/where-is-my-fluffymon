@@ -20,25 +20,30 @@ namespace Person.Utils.Jwt
 
             _jwtEncoder = new JwtEncoder(algorithm, serializer, base64Encoder);
 
-            _jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? string.Empty;
+            var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+            if (string.IsNullOrEmpty(jwtKey))
+                throw new ArgumentNullException(
+                    string.Empty,
+                    "Please supply the JWT_KEY"
+                );
 
-            if (string.IsNullOrEmpty(_jwtKey)) throw new Exception("Please supply the JWT_KEY");
+            _jwtKey = jwtKey;
         }
 
         public string Encode(string userId)
         {
-            var payload = JwtPayload.Create(userId);
+            var payload = new JwtPayload(userId);
 
             return _jwtEncoder.Encode(payload, _jwtKey);
         }
 
-        public JwtPayload Decode(string jwtToken)
+        public JwtPayload Decode(string authorizationHeader)
         {
             var payload = new JwtBuilder()
                 .WithAlgorithm(new HMACSHA256Algorithm())
                 .WithSecret(_jwtKey)
                 .MustVerifySignature()
-                .Decode<JwtPayload>(jwtToken);
+                .Decode<JwtPayload>(authorizationHeader);
 
             if (string.IsNullOrEmpty(payload.UserId) || payload.ExpirationTime < DateTime.Now.Ticks)
                 throw new PersonException(PersonExceptionType.PersonJwtIsInvalid);

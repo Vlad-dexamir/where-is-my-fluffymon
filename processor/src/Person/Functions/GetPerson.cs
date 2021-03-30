@@ -43,12 +43,12 @@ namespace Person.Functions
                     .Equals(PersonException.Exceptions[PersonExceptionType.PersonDoesNotExist])
                 )
 
-                    return BuildResponse.Failure(HttpStatusCode.BadRequest, Error.Create(
+                    return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error(
                         exception.Message,
                         PersonExceptionType.PersonDoesNotExist
                     ));
 
-                return BuildResponse.Failure(HttpStatusCode.InternalServerError, Error.Create(
+                return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error(
                     exception.Message
                 ));
             }

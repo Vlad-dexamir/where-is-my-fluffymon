@@ -9,7 +9,8 @@ namespace PersonApi
         public static readonly Regex PersonEmailPattern = new(
             @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
         );
-
+        public const int PhoneNumberMinLength = 10;
+        public const int PhoneNumberMaxLength = 12;
         public const int NameMinLength = 3;
         public const int NameMaxLength = 32;
         public const int PasswordMinLength = 8;

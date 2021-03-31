@@ -18,5 +18,6 @@ namespace PersonApi
         public const string AuthorizationHeaderMissingBearer = "AuthorizationHeaderMissingBearer";
         public const string PersonDoesNotExist = "PersonDoesNotExist";
         public const string PersonError = "PersonError";
+        public const string PhoneNumberError = "PhoneNumberIsInvalid";
     }
 }

@@ -18,7 +18,7 @@ namespace PersonApi
 
     public class UpdatePersonRequestValidator : AbstractValidator<CreatePersonRequest>
     {
-        public UpdatePersonRequestValidator(personId)
+        public UpdatePersonRequestValidator()
         {            
             RuleFor(request => request.FirstName)
                 .MinimumLength(Person.NameMinLength)
@@ -49,7 +49,7 @@ namespace PersonApi
                 .MaximumLength(Person.PhoneNumberMaxLength)
                 .WithMessage(PersonException.Exceptions[PersonExceptionType.PhoneNumberError]);
 
-            //Cum verific daca personId este echivalent
+            
         }
     }
 }

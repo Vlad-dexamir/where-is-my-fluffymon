@@ -11,8 +11,6 @@ namespace PersonApi
 
     public class AuthorizePersonRequestValidator : AbstractValidator<AuthorizePersonRequest>
     {
-        
-
         public AuthorizePersonRequestValidator()
         {
             RuleFor(authorizePersonRequest => authorizePersonRequest.Email)

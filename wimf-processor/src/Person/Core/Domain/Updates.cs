@@ -29,12 +29,18 @@ namespace PersonApi
         {
             if (value == null && action != UpdateActionType.Delete)
             {
-                throw new Exception($"A {UpdateActionType.Delete} action cannot have a value");
+                throw new ArgumentNullException(
+                    string.Empty,
+                    $"A {UpdateActionType.Delete} action cannot have a value"
+                    );
             }
 
             if (value == null && action == null)
             {
-                throw new Exception("Please supply a Value or an Action ");
+                throw new ArgumentNullException(
+                    string.Empty,
+                    "Please supply a Value or an Action "
+                    );
             }
 
             if (value != null)

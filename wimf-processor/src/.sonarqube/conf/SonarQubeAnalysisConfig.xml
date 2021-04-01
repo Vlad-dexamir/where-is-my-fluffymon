@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AnalysisConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <SonarConfigDir>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/conf</SonarConfigDir>
-  <SonarOutputDir>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/out</SonarOutputDir>
-  <SonarBinDir>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/bin</SonarBinDir>
-  <SonarScannerWorkingDirectory>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src</SonarScannerWorkingDirectory>
+  <SonarConfigDir>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/conf</SonarConfigDir>
+  <SonarOutputDir>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/out</SonarOutputDir>
+  <SonarBinDir>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/bin</SonarBinDir>
+  <SonarScannerWorkingDirectory>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src</SonarScannerWorkingDirectory>
   <HasBeginStepCommandLineCredentials>false</HasBeginStepCommandLineCredentials>
   <SonarQubeHostUrl>https://sonarcloud.io</SonarQubeHostUrl>
-  <SonarQubeVersion>8.0.0.18801</SonarQubeVersion>
+  <SonarQubeVersion>8.0.0.18862</SonarQubeVersion>
   <SonarProjectKey>vladdexamir_where-is-my-fluffymon</SonarProjectKey>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
@@ -125,7 +125,7 @@
     <Property Name="sonar.core.serverBaseURL">https://sonarcloud.io</Property>
     <Property Name="sonar.lf.logoWidthPx">105</Property>
     <Property Name="sonar.core.id">1BD809FA-AWHW8ct9-T_TB3XqouNu</Property>
-    <Property Name="sonar.core.startTime">03/27/2021 17:15:56</Property>
+    <Property Name="sonar.core.startTime">03/31/2021 15:53:03</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">https://sonarcloud.io</Property>
@@ -134,8 +134,8 @@
   <AnalyzersSettings>
     <AnalyzerSettings>
       <Language>cs</Language>
-      <RuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/conf/SonarQubeRoslyn-cs.ruleset</RuleSetFilePath>
-      <TestProjectRuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/conf/SonarQubeRoslyn-cs-test.ruleset</TestProjectRuleSetFilePath>
+      <RuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/conf/SonarQubeRoslyn-cs.ruleset</RuleSetFilePath>
+      <TestProjectRuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/conf/SonarQubeRoslyn-cs-test.ruleset</TestProjectRuleSetFilePath>
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="csharp" Version="8.20.0.28934" StaticResourceName="SonarAnalyzer-8.20.0.28934.zip">
           <AssemblyPaths>
@@ -165,13 +165,13 @@
         </AnalyzerPlugin>
       </AnalyzerPlugins>
       <AdditionalFilePaths>
-        <Path>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/conf/cs/SonarLint.xml</Path>
+        <Path>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/conf/cs/SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
     <AnalyzerSettings>
       <Language>vbnet</Language>
-      <RuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/conf/SonarQubeRoslyn-vbnet.ruleset</RuleSetFilePath>
-      <TestProjectRuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/conf/SonarQubeRoslyn-vbnet-test.ruleset</TestProjectRuleSetFilePath>
+      <RuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/conf/SonarQubeRoslyn-vbnet.ruleset</RuleSetFilePath>
+      <TestProjectRuleSetFilePath>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/conf/SonarQubeRoslyn-vbnet-test.ruleset</TestProjectRuleSetFilePath>
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="csharp" Version="8.20.0.28934" StaticResourceName="SonarAnalyzer-8.20.0.28934.zip">
           <AssemblyPaths>
@@ -190,7 +190,7 @@
         </AnalyzerPlugin>
       </AnalyzerPlugins>
       <AdditionalFilePaths>
-        <Path>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/processor/src/.sonarqube/conf/vbnet/SonarLint.xml</Path>
+        <Path>/Users/vlad.dexamir/Documents/Work/where-is-my-fluffymon/wimf-processor/src/.sonarqube/conf/vbnet/SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
   </AnalyzersSettings>

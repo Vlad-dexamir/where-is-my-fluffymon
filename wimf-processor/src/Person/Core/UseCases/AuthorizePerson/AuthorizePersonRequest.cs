@@ -15,19 +15,19 @@ namespace PersonApi
 
         public AuthorizePersonRequestValidator()
         {
-            RuleFor(request => request.Email)
+            RuleFor(authorizePersonRequest => authorizePersonRequest.Email)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage(PersonException.Exceptions[PersonExceptionType.PersonEmailIsRequired]);
-            RuleFor(request => request.Email)
+            RuleFor(authorizePersonRequest => authorizePersonRequest.Email)
                 .Matches(Person.PersonEmailPattern)
                 .WithMessage(PersonException.Exceptions[PersonExceptionType.PersonEmailIsInvalid]);
 
-            RuleFor(request => request.Password)
+            RuleFor(authorizePersonRequest => authorizePersonRequest.Password)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage(PersonException.Exceptions[PersonExceptionType.PersonPasswordIsRequired]);
-            RuleFor(request => request.Password)
+            RuleFor(authorizePersonRequest => authorizePersonRequest.Password)
                 .MinimumLength(Person.PasswordMinLength)
                 .MaximumLength(Person.PasswordMaxLength)
                 .WithMessage(PersonException.Exceptions[PersonExceptionType.PersonPasswordIsInvalid]);

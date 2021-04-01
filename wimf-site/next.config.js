@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
     ignoreBuildErrors: false,
     webpack: (config) => {
         const definePlugin = new webpack.DefinePlugin({
-            //TODO add env vars
+           // TODO add here env variables
         });
 
         config.plugins.push(definePlugin);

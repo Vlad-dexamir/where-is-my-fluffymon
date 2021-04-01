@@ -1,1 +1,1 @@
-//TODO declare here env vars
+// TODO declare env variables here

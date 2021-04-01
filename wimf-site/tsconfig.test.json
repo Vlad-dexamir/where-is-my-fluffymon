@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "isolatedModules": false,
+    "jsx": "react"
+  },
+  "include": [
+    "next-env.d.ts",
+    "main/**/*.ts{,x}",
+    "tests/**/*.ts{,x}",
+    "main/global.d.ts"
+  ]
+}

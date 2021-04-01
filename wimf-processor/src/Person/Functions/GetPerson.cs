@@ -28,7 +28,12 @@ namespace Person.Functions
             {
                 log.LogInformation("[GET_PERSON_HANDLER] Retrieving person...");
 
-                var person = await GetPersonUseCase.Execute(_personRepository, personId);
+                GetPersonDeps getPersonDeps = new GetPersonDeps
+                {
+                    PersonRepository = _personRepository
+                };
+
+                var person = await GetPersonUseCase.Execute(getPersonDeps, personId);
 
                 log.LogInformation(
                     $"[GET_PERSON_HANDLER] Person with personId:${personId} retrieved successfully");

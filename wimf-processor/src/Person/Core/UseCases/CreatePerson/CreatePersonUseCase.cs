@@ -6,12 +6,14 @@ namespace PersonApi
 {
     public static class CreatePersonUseCase
     {
-        public static readonly Func<IPersonRepository, CreatePersonRequest, Task<string>> Execute =
-            async (personRepository, createPersonRequest) =>
+        public static readonly Func<CreatePersonDeps, CreatePersonRequest, Task<string>> Execute =
+            async (createPersonDeps, createPersonRequest) =>
             {
-                var foundUser = await personRepository.GetPersonByEmail(createPersonRequest.Email);
+                var personRepository = createPersonDeps.PersonRepository;
+                
+                var foundPerson = await personRepository.GetPersonByEmail(createPersonRequest.Email);
 
-                if (foundUser != null) throw new PersonException(PersonExceptionType.PersonAlreadyExists);
+                if (foundPerson != null) throw new PersonException(PersonExceptionType.PersonAlreadyExists);
 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(createPersonRequest.Password);
 

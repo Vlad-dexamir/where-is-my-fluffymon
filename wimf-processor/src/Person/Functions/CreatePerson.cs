@@ -32,7 +32,6 @@ namespace Person.Functions
                 log.LogInformation("[CREATE_PERSON_HANDLER] Retrieving createPersonRequest...");
 
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
                 var createPersonRequest = JsonConvert.DeserializeObject<CreatePersonRequest>(requestBody);
 
                 log.LogInformation("[CREATE_PERSON_HANDLER] Validating createPersonRequest...");
@@ -51,7 +50,12 @@ namespace Person.Functions
 
                 log.LogInformation("[CREATE_PERSON_HANDLER] Creating person...");
 
-                var personJwt = await CreatePersonUseCase.Execute(_personRepository, createPersonRequest);
+                CreatePersonDeps createPersonDeps = new CreatePersonDeps
+                {
+                    PersonRepository = _personRepository
+                };
+
+                var personJwt = await CreatePersonUseCase.Execute(createPersonDeps, createPersonRequest);
 
                 log.LogInformation("[CREATE_PERSON_HANDLER] Person created successfully");
 

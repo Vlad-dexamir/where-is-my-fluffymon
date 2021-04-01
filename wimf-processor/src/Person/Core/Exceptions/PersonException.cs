@@ -41,6 +41,8 @@ namespace PersonApi
 
             {PersonExceptionType.AuthorizationHeaderIsRequired, "Authorization Header is required"},
             {PersonExceptionType.AuthorizationHeaderMissingBearer, "Missing Bearer from Authorization Token"},
+            
+            {PersonExceptionType.PersonInvalidCredentials, "Email or Password INVALID"}
         };
 
         public PersonException(string type) : base(string.Format(Exceptions[type]))

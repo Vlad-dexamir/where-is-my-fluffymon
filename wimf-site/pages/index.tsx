@@ -1,8 +1,12 @@
-import {LoginPage} from "../main/pages/LoginPage/LoginPage";
-import React from "react";
+import { NextPage, NextPageContext } from 'next';
+import { Store } from 'redux';
+import { AppState } from '../main/store/AppState';
 
-export default function Home() {
-  return (
-    <LoginPage/>
-  )
-}
+const Index: NextPage = () => null;
+
+Index.getInitialProps = async ({
+  reduxStore,
+}: NextPageContext & { reduxStore: Store<AppState> }) => {
+  return reduxStore.getState();
+};
+export default Index;

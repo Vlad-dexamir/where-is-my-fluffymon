@@ -7,8 +7,8 @@ module.exports = {
     ignoreBuildErrors: false,
     webpack: (config) => {
         const definePlugin = new webpack.DefinePlugin({
-           // TODO add here env variables
-        });
+                //TODO declare here
+            });
 
         config.plugins.push(definePlugin);
 

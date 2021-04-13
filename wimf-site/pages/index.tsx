@@ -1,8 +1,10 @@
 import { NextPage, NextPageContext } from 'next';
 import { Store } from 'redux';
 import { AppState } from '../main/store/AppState';
+import React from 'react';
+import { LandingPage } from '../main/pages/LandingPage/LandingPage';
 
-const Index: NextPage = () => null;
+const Index: NextPage = () => <LandingPage />;
 
 Index.getInitialProps = async ({
   reduxStore,

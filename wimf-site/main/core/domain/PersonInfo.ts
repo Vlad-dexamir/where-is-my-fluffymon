@@ -9,3 +9,8 @@ export interface PersonInfo {
   readonly phoneNumber?: string;
   readonly profilePicture?: string;
 }
+
+export const PersonConstraints = {
+  passwordMin: 8,
+  passwordMax: 32,
+};

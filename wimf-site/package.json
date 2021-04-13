@@ -1,5 +1,5 @@
 {
-  "name": "movie-recommandations-site",
+  "name": "wimf-site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,17 +9,15 @@
     "lint": "tslint -c tslint.json '**/*.ts{,x}'",
     "lint:css": "stylelint '**/*.ts{,x}'",
     "lint:fix": "tslint --fix -c tslint.json '**/*.ts{,x}'",
-    "test": "NODE_ENV=test TZ=UTC jest",
-    "test:coverage": "npm run test -- --coverage",
-    "test:watch": "npm run test -- --watchAll",
     "validate:build": "tsc -p tsconfig.json",
-    "validate": "npm run lint && npm run lint:css && npm run test:coverage && npm run validate:build"
+    "validate": "npm run lint && npm run lint:css && npm run validate:build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@types/react-slick": "^0.23.4",
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
+    "formik": "^2.2.6",
     "jsonwebtoken": "^8.5.1",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.26.0",
@@ -44,7 +42,8 @@
     "reselect": "^4.0.0",
     "styled-components": "^5.1.1",
     "sweetalert2": "^9.17.1",
-    "webpack": "^4.43.0"
+    "webpack": "^4.43.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -62,7 +61,7 @@
     "@types/react-select": "^3.0.13",
     "@types/styled-components": "^5.1.0",
     "@types/swiper": "^5.3.1",
-    "@types/yup": "^0.29.2",
+    "@types/yup": "^0.29.11",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",

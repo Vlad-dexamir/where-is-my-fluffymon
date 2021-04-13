@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using static System.DateTimeOffset;
 
 namespace Person.Utils.Jwt
@@ -5,14 +6,24 @@ namespace Person.Utils.Jwt
     public class JwtPayload
     {
 #nullable disable
-        public readonly long ExpirationTime;
+
+        public Dictionary<string, object> Create()
+        {
+            return new Dictionary<string, object>
+            {
+                {"exp", Exp},
+                {"userId", UserId}
+            };
+        }
+
+        public readonly long Exp;
         public readonly string UserId;
 
         public JwtPayload(string userId)
         {
             UserId = userId;
 
-            ExpirationTime = Now.AddHours(1).ToUnixTimeSeconds();
+            Exp = UtcNow.AddHours(1).ToUnixTimeSeconds();
         }
     }
 }

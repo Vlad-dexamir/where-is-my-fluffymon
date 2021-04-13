@@ -1,56 +1,80 @@
-import React from "react";
-import {useFormik} from "formik";
-import * as yup from "yup";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import {LoginFormWrapper} from "./LoginFormStyles";
+import React, { FC } from 'react';
+import * as Yup from 'yup';
+import { PersonError } from '../../core/errors/PersonError';
+import { PersonConstraints } from '../../core/domain/PersonInfo';
+import { useFormik } from 'formik';
+import { LoginFormWrapper, Form, LoginFormField } from './LoginFormStyles';
+import { Button } from '../elements/Button/Button';
+import { Input } from '../elements/Input/Input';
 
-const validationSchema = {
-    email: yup.string().email().required(),
-    password: yup.string()
-        .min(8, "Password must have minimum 8 characters")
-        .max(32, "Password must have maximum 8 characters")
+type LoginFormValues = {
+  email: string;
+  password: string;
 };
 
-const initialValues = {
-    email: "",
-    password: "",
+const validationSchema: Yup.SchemaOf<LoginFormValues> = Yup.object().shape({
+  email: Yup.string()
+    .email(PersonError.EMAIL_INVALID)
+    .required(PersonError.EMAIL_REQUIRED),
+  password: Yup.string()
+    .min(PersonConstraints.passwordMin, PersonError.PASSWORD_MIN)
+    .max(PersonConstraints.passwordMax, PersonError.PASSWORD_MAX)
+    .required(PersonError.PASSWORD_REQUIRED),
+});
+
+const initialValues: LoginFormValues = {
+  email: '',
+  password: '',
 };
 
-export const LoginForm = () => {
-    const handleSubmit = (values:any) => {
-        console.log(values);
-    };
+const LoginForm: FC = () => {
+  const onSubmit = (values: LoginFormValues) => {
+    console.log(values);
+  };
 
-    const formik = useFormik({
-        initialValues,
-        onSubmit: handleSubmit,
-    });
+  const formik = useFormik<LoginFormValues>({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
-    return(
-        <LoginFormWrapper>
-            <TextField
-                id="#email"
-                name="email"
-                label="Email"
-                value ={formik.values.email}
-                onChange={formik.handleChange}
-                type="email"
-                />
-            <TextField
-                id="#password"
-                name="password"
-                label="Password"
-                value ={formik.values.password}
-                onChange={formik.handleChange}
-                type="password"
+  const {
+    handleSubmit,
+    handleChange,
+    errors,
+    touched,
+    values: { email, password },
+  } = formik;
 
-            />
+  return (
+    <LoginFormWrapper>
+      <Form onSubmit={handleSubmit}>
+        <LoginFormField>
+          <Input
+            name="email"
+            label="Email"
+            type="email"
+            value={email}
+            placeholder="Email"
+            handleChange={handleChange}
+            errorMessage={(touched.email && errors.email) as string}
+          />
+        </LoginFormField>
+        <LoginFormField>
+          <Input
+            name="password"
+            label="Password"
+            type="password"
+            value={password}
+            placeholder="Password"
+            handleChange={handleChange}
+            errorMessage={(touched.password && errors.password) as string}
+          />
+        </LoginFormField>
+        <Button type="submit">Login</Button>
+      </Form>
+    </LoginFormWrapper>
+  );
+};
 
-            <Button color ="primary" variant="contained" type="submit">
-                Login
-            </Button>
-
-        </LoginFormWrapper>
-    )
-}
+export { LoginForm };

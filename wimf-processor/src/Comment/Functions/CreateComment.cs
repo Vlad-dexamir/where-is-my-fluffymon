@@ -8,23 +8,25 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Post.Utils.BuildResponse;
-using PostApi;
+using Comment.Utils.BuildResponse;
+using CommentApi;
 
-namespace Post.Functions
+
+namespace Comment.Functions
+
 {
     public class CreateComment
     {
-        private readonly IPostRepository _postRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public CreateComment(IPostRepository postRepository)
+        public CreateComment(ICommentRepository commentRepository)
         {
-            _postRepository = postRepository;
+            _commentRepository = commentRepository;
         }
 
         [FunctionName("CreateComment")]
         public async Task<object> CreateCommentHandler(
-            [HttpTrigger(AuthorizationLevel.Function, "patch", Route = "create-comment")]
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "create-comment")]
             HttpRequest req, ILogger log)
         {
             try
@@ -36,7 +38,7 @@ namespace Post.Functions
 
                 log.LogInformation("[CREATE_COMMENT_HANDLER] Validating createCommentRequest...");
 
-                var validationResult = await new CreateCommentRequestValidator().ValidateAsync(createPersonRequest);
+                var validationResult = await new CreateCommentRequestValidator().ValidateAsync(createCommentRequest);
 
                 if (!validationResult.IsValid)
                     return BuildResponse.Failure(
@@ -52,20 +54,18 @@ namespace Post.Functions
 
                 CreateCommentDeps createCommentDeps = new CreateCommentDeps
                 {
-                    postRepository = _postRepository
+                    CommentRepository = _commentRepository
                 };
 
-                var commentJwt = await CreateCommentUseCase.Execute(createCommentDeps, createCommentRequest);
+                var createdComment = await CreateCommentUseCase.Execute(createCommentDeps, createCommentRequest);
 
                 log.LogInformation("[CREATE_COMMENT_HANDLER] Comment created successfully");
 
-                return BuildResponse.Success(personJwt);
+                return BuildResponse.Success(createdComment);
             }
             catch (Exception exception)
             {
                 log.LogError(exception.Message);
-
-               //To validate at a later date
 
                 return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error(
                     exception.Message

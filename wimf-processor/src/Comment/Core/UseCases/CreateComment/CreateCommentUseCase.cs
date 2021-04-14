@@ -1,29 +1,36 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Post.Utils.Jwt;
+using static System.DateTimeOffset;
 
-namespace PostApi
+
+namespace CommentApi
 {
-    public static class CreateCommentUseCase
+    public class CreateCommentUseCase
     {
-        public static readonly Func<CreatePostDeps, CreateCommentRequest, Task<string>> Execute =
-            async (createPostDeps, createCommentRequest) =>
+
+        public static readonly Func<CreateCommentDeps, CreateCommentRequest, Task<Comment>> Execute =
+            async (createCommentDeps, createCommentRequest) =>
             {
-                var postRepository = createPostDeps.PostRepository;
+                var commentRepository = createCommentDeps.CommentRepository;
 
-                var foundPost = await postRepository.GetPostById(createPostRequest.Id);
-
-                if (foundPost == null) throw new PostException(PostExceptionType.PostDoesntExists);
+                var commentId = Guid.NewGuid().ToString();
 
                 var commentToCreate = new Comment
                 {
-                    Comment = createCommentRequest.Comment
+                    Id = commentId,
+                    PostId = createCommentRequest.PostId,
+                    ParentId = createCommentRequest.ParentId,
+                    Text = createCommentRequest.Text,
+                    UserId = createCommentRequest.UserId,
+                    UserInfo = createCommentRequest.UserInfo,
+                    CreatedAt = UtcNow.ToUnixTimeSeconds()
+
                 };
 
-                var createdComment = await postRepository.AddComment(commentToCreate);
+                var createdComment = await commentRepository.CreateComment(commentToCreate);
 
-                return new Jwt().Encode(createdComment.Comment);
-                //De intrebat pe Vlad
+                return createdComment;
             };
+
     }
 }

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PostApi
+namespace CommentApi
 {
     public class CommentException : Exception
     {
         public static readonly Dictionary<string, string> Exceptions = new()
         {
-            { CommentExceptionType.CommentIsRequired, "Comment is a required field" },
+            { CommentExceptionType.TextIsRequired, "Comment is a required field" },
             {
-                CommentExceptionType.CommentIsInvalid,
-                $"Comment must have minimum {Comment.CommentMinLength.ToString()} " +
-                $"and maximum {Comment.CommentMaxLength.ToString()} characters"
-            }
+                CommentExceptionType.TextIsInvalid,
+                $"Comment must have minimum {Comment.MinLength.ToString()} " +
+                $"and maximum {Comment.MaxLength.ToString()} characters"
+            },
+            { CommentExceptionType.CommentsDoNotExist, "Comments do not exist" },
+            { CommentExceptionType.UserIdIsRequired, "userId is a required field" },
+            { CommentExceptionType.UserInfoIsRequired, "userInfo is a required field" },
+            { CommentExceptionType.CreatedAtIsRequired, "createdAt is a required field" }
         };
 
         public CommentException(string type) : base(string.Format(Exceptions[type]))

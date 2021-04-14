@@ -1,25 +1,32 @@
 ﻿using FluentValidation;
 
-namespace PostApi
+namespace CommentApi
 {
     public class CreateCommentRequest
     {
 #nullable disable
-        public string Comment { get; set; }
+        public string Text { get; set; }
+        public string PostId { get; set; }
+        public string ParentId { get; set; }
+        public string UserId { get; set; }
+#nullable enable
+        public UserInfo? UserInfo { get; set; }
+        public long? UpdatedAt { get; set; }
+
     }
 
     public class CreateCommentRequestValidator : AbstractValidator<CreateCommentRequest>
     {
         public CreateCommentRequestValidator()
         {
-            RuleFor(request => request.Comment)
+            RuleFor(request => request.Text)
                 .NotEmpty()
                 .NotNull()
-                .WithMessage(CommentException.Exceptions[CommentExceptionType.CommentIsRequired]);
-            RuleFor(request => request.Comment)
-                .MinimumLength(Comment.NameMinLength)
-                .MaximumLength(Comment.NameMaxLength)
-                .WithMessage(CommentException.Exceptions[CommentExceptionType.CommentIsInvalid]);            
+                .WithMessage(CommentException.Exceptions[CommentExceptionType.TextIsRequired]);
+            RuleFor(request => request.Text)
+                .MinimumLength(Comment.MinLength)
+                .MaximumLength(Comment.MaxLength)
+                .WithMessage(CommentException.Exceptions[CommentExceptionType.TextIsInvalid]);            
         }
     }
 }

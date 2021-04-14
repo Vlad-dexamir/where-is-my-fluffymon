@@ -30,13 +30,13 @@ namespace PostApi
 
         [BsonElement("userId")] public string UserId { get; set; }
         
-        [BsonElement("userInfo")] public UserInfo UserInfo { get; set; }
-        
-        [BsonElement("attachements")] public IEnumerable<string> Attachements { get; set; }
-        
         [BsonElement("createdAt")] public long CreatedAt { get; set; }
+
+#nullable enable        
+        [BsonElement("userInfo")] public UserInfo? UserInfo { get; set; }
         
-#nullable enable
+        [BsonElement("attachements")] public IEnumerable<string>? Attachements { get; set; }
+        
         [BsonElement("updatedAt")] public long? UpdatedAt { get; set; }
         
     }

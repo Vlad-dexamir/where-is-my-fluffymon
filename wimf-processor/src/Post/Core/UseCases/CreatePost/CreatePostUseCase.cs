@@ -8,14 +8,12 @@ namespace PostApi
     public class CreatePostUseCase
     {
         
-        public static readonly Func<CreatePostDeps, CreatePostRequest, Task<bool>> Execute =
+        public static readonly Func<CreatePostDeps, CreatePostRequest, Task<Post>> Execute =
             async (createPostDeps, createPostRequest) =>
             {
                 var postRepository = createPostDeps.PostRepository;
                 
                 var postId = Guid.NewGuid().ToString();
-
-                
                 
                 var postToCreate = new Post
                 {
@@ -34,7 +32,7 @@ namespace PostApi
 
                 var createdPost = await postRepository.CreatePost(postToCreate);
 
-                return true;
+                return createdPost;
             };
         
     }

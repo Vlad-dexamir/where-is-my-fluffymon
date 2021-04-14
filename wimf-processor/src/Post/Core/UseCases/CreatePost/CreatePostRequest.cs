@@ -11,10 +11,10 @@ namespace PostApi
         public string Content { get; set; }
         public UserLocation Location { get; set; }
         public string UserId { get; set; }
-        public UserInfo UserInfo { get; set; }
-        public IEnumerable<string> Attachements { get; set; }
-       
-#nullable enable
+#nullable enable        
+        public UserInfo? UserInfo { get; set; }
+        public IEnumerable<string>? Attachements { get; set; }
+        
         public long? UpdatedAt { get; set; }
     }
 
@@ -48,18 +48,7 @@ namespace PostApi
                 .NotEmpty()
                 .NotNull()
                 .WithMessage(PostException.Exceptions[PostExceptionType.PostLocationIsRequired]);
-
-            RuleFor(request => request.UserInfo)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage(PostException.Exceptions[PostExceptionType.UserInfoIsRequired]);
             
-            RuleFor(request => request.Attachements)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage(PostException.Exceptions[PostExceptionType.AttachmentsIsRequired]);
-
-           
         }
     }
 }

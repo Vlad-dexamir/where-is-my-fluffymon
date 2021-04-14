@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using DnsClient.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Post.Utils.BuildResponse;
 using PostApi;
@@ -56,11 +56,12 @@ namespace Post.Functions
                 {
                     PostRepository = _postRepository
                 };
-                
+
+                var createdPost = await CreatePostUseCase.Execute(createPostDeps, createPostRequest);
                 
                 log.LogInformation("[CREATE_POST_HANDLER] Post created successfully");
 
-                return BuildResponse.Success(createPostRequest);
+                return BuildResponse.Success(createdPost);
             }
             catch (Exception exception)
             {

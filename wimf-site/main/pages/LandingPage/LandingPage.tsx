@@ -1,12 +1,23 @@
 import React from 'react';
-import { LandingPageContainer, LandingPageTitle } from './LandingPageStyles';
-import { LoginForm } from '../../components/LoginForm/LoginForm';
+import {
+    LandingPageBannerDescription,
+    LandingPageBannerLogoLeft,
+    LandingPageBannerLogoRight,
+    LandingPageContainer,
+    LandingPageHeader, LandingPageSubtitle,
+    LandingPageTitle
+} from './LandingPageStyles';
 
 export const LandingPage: React.FC = () => {
   return (
     <LandingPageContainer>
-      <LandingPageTitle>Member Login</LandingPageTitle>
-      <LoginForm />
+     <LandingPageHeader>
+         <LandingPageTitle>WIMF</LandingPageTitle>
+         <LandingPageSubtitle>Where's my fluffymon?</LandingPageSubtitle>
+     </LandingPageHeader>
+     <LandingPageBannerLogoLeft/>
+     <LandingPageBannerLogoRight/>
+        <LandingPageBannerDescription>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</LandingPageBannerDescription>
     </LandingPageContainer>
   );
 };

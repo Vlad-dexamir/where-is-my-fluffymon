@@ -54,7 +54,7 @@ export const color = {
   other: {
     primary: '#008AAF',
     secondary: '#32A6A6',
-    tertiary: '#e6b31e',
+    tertiary: '#ecb42c',
     quaternary: '#95D5D1',
   },
 };
@@ -62,6 +62,8 @@ export const color = {
 export const font = {
   primary: 'Merriweather, sans-serif',
   secondary: 'Roboto Condensed, sans-serif',
+  tertiary: 'Amatic SC, cursive',
+  quaternary: 'Train One, cursive',
 };
 
 export const GlobalStyle = createGlobalStyle`

@@ -26,10 +26,11 @@ namespace PostApi
             
             
             {PostExceptionType.PostTypeIsRequired, "postType is a required field"},
+            
             {PostExceptionType.PostLocationIsRequired, "location is a required field"},
+            
             {PostExceptionType.UserIdIsRequired, "userId is a required field"},
-            {PostExceptionType.UserInfoIsRequired, "userInfo is a required field"},
-            {PostExceptionType.AttachmentsIsRequired, "attachements is a required field"},
+            
             {PostExceptionType.CreatedAtIsRequired, "createdAt is a required field"}
 
         };

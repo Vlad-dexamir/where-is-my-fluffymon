@@ -6,11 +6,11 @@ namespace PostApi
     public static class GetPostUseCase
     {
         public static readonly Func<GetPostDeps, string, Task<PostDto>> Execute =
-            async (getPersonDeps, personId) =>
+            async (getPostDeps, postId) =>
             {
-                var personRepository = getPersonDeps.PostRepository;
+                var postRepository = getPostDeps.PostRepository;
 
-                var foundPost = await personRepository.GetPost(personId);
+                var foundPost = await postRepository.GetPost(postId);
 
                 if (foundPost == null)
                 {

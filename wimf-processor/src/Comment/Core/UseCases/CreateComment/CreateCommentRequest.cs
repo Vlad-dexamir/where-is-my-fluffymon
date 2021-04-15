@@ -4,15 +4,13 @@ namespace CommentApi
 {
     public class CreateCommentRequest
     {
-#nullable disable
         public string Text { get; set; }
         public string PostId { get; set; }
-        public string ParentId { get; set; }
         public string UserId { get; set; }
+#nullable disable
 #nullable enable
         public UserInfo? UserInfo { get; set; }
-        public long? UpdatedAt { get; set; }
-
+        public string? ParentId { get; set; }
     }
 
     public class CreateCommentRequestValidator : AbstractValidator<CreateCommentRequest>
@@ -26,7 +24,17 @@ namespace CommentApi
             RuleFor(request => request.Text)
                 .MinimumLength(Comment.MinLength)
                 .MaximumLength(Comment.MaxLength)
-                .WithMessage(CommentException.Exceptions[CommentExceptionType.TextIsInvalid]);            
+                .WithMessage(CommentException.Exceptions[CommentExceptionType.TextIsInvalid]);
+
+            RuleFor(request => request.PostId)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage(CommentException.Exceptions[CommentExceptionType.UserIdIsRequired]);
+
+            RuleFor(request => request.PostId)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage(CommentException.Exceptions[CommentExceptionType.PostIdIsRequired]);
         }
     }
 }

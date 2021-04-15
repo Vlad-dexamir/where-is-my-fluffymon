@@ -12,7 +12,7 @@ namespace Comment.Utils.BuildResponse
 
         public static object Failure(HttpStatusCode statusCode, object? body)
         {
-            return new ObjectResult(body) { StatusCode = (int)statusCode };
+            return new ObjectResult(body) {StatusCode = (int) statusCode};
         }
     }
 }

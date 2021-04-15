@@ -1,8 +1,8 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using Comment.Config;
+using CommentApi;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Comment.Config;
-using CommentApi;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 

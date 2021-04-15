@@ -3,14 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Comment.Utils.BuildResponse;
+using CommentApi;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Comment.Utils.BuildResponse;
-using CommentApi;
-
 
 namespace Comment.Functions
 
@@ -52,7 +51,7 @@ namespace Comment.Functions
 
                 log.LogInformation("[CREATE_COMMENT_HANDLER] Creating comment...");
 
-                CreateCommentDeps createCommentDeps = new CreateCommentDeps
+                var createCommentDeps = new CreateCommentDeps
                 {
                     CommentRepository = _commentRepository
                 };

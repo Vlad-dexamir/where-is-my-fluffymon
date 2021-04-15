@@ -6,8 +6,8 @@
         public const string TextIsInvalid = "TextIsInvalid";
         public const string CommentError = "CommentError";
         public const string UserIdIsRequired = "UserIdIsRequired";
-        public const string UserInfoIsRequired = "UserInfoIsRequired";
         public const string CreatedAtIsRequired = "CreatedAtIsRequired";
         public const string CommentsDoNotExist = "CommentsDoNotExist";
+        public const string PostIdIsRequired = "PostIdIsRequired";
     }
 }

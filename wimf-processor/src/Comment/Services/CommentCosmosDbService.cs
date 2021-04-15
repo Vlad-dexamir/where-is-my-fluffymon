@@ -35,7 +35,7 @@ namespace CommentApi
 
             var config = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
             config.SslSettings =
-                new SslSettings { EnabledSslProtocols = SslProtocols.Tls12 };
+                new SslSettings {EnabledSslProtocols = SslProtocols.Tls12};
 
             var mongoClient = new MongoClient(config);
 

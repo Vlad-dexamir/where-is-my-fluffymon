@@ -8,6 +8,7 @@ import { AppState } from '../main/store/AppState';
 import { withStore } from '../main/components/withRedux';
 import { Context } from '../main/Context';
 import { HttpApiService } from '../main/services/HttpApiService';
+import {Layout} from '../main/components/Layout';
 
 Context.initialize({
   apiService: new HttpApiService(),
@@ -30,7 +31,9 @@ class ReduxApp extends App<AppProps & { reduxStore: Store<AppState> }> {
 
     return (
       <Provider store={reduxStore}>
+        <Layout>
         <Component {...pageProps} />
+        </Layout>
       </Provider>
     );
   }

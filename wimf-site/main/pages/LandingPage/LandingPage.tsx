@@ -1,23 +1,60 @@
 import React from 'react';
-import {
-    LandingPageBannerDescription,
-    LandingPageBannerLogoLeft,
-    LandingPageBannerLogoRight,
-    LandingPageContainer,
-    LandingPageHeader, LandingPageSubtitle,
-    LandingPageTitle
-} from './LandingPageStyles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
-export const LandingPage: React.FC = () => {
+import {
+  LandingPageAboutUsContainer,
+  LandingPageAboutUsHeader,
+  LandingPageAboutUsIconWrapper,
+  LandingPageAboutUsTitle,
+  LandingPageBannerDescription,
+  LandingPageBannerLogoLeft,
+  LandingPageBannerLogoRight,
+  LandingPageContainer,
+  LandingPageHeader,
+  LandingPageJoinUsContainer,
+  LandingPageLegalInfoContainer,
+  LandingPageServicesContainer,
+  LandingPageSubtitle,
+  LandingPageTitle,
+} from './LandingPageStyles';
+import { Button } from '../../components/elements/Button/Button';
+
+export type LandingPageProps = {
+  title: string;
+  subtitle: string;
+  description: string;
+};
+
+export const LandingPage: React.FC<LandingPageProps> = ({
+  title,
+  subtitle,
+  description,
+}) => {
   return (
     <LandingPageContainer>
-     <LandingPageHeader>
-         <LandingPageTitle>WIMF</LandingPageTitle>
-         <LandingPageSubtitle>Where's my fluffymon?</LandingPageSubtitle>
-     </LandingPageHeader>
-     <LandingPageBannerLogoLeft/>
-     <LandingPageBannerLogoRight/>
-        <LandingPageBannerDescription>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</LandingPageBannerDescription>
+      <LandingPageHeader>
+        <LandingPageTitle>{title}</LandingPageTitle>
+        <LandingPageSubtitle>{subtitle}</LandingPageSubtitle>
+      </LandingPageHeader>
+      <LandingPageBannerLogoLeft />
+      <LandingPageBannerLogoRight />
+      <LandingPageBannerDescription>
+        {description}
+        <LandingPageJoinUsContainer>
+          <Button type="button">Join us</Button>
+        </LandingPageJoinUsContainer>
+      </LandingPageBannerDescription>
+      <LandingPageAboutUsContainer>
+        <LandingPageAboutUsHeader>
+          <LandingPageAboutUsTitle>About us</LandingPageAboutUsTitle>
+          <LandingPageAboutUsIconWrapper>
+            <FontAwesomeIcon icon={faQuestion} size="lg" />
+          </LandingPageAboutUsIconWrapper>
+        </LandingPageAboutUsHeader>
+      </LandingPageAboutUsContainer>
+      <LandingPageServicesContainer></LandingPageServicesContainer>
+      <LandingPageLegalInfoContainer></LandingPageLegalInfoContainer>
     </LandingPageContainer>
   );
 };

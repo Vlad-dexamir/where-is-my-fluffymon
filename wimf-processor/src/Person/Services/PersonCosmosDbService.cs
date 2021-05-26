@@ -65,22 +65,13 @@ namespace PersonApi
             return foundPerson.FirstOrDefault();
         }
 
-        public Task<IEnumerable<Person>> GetAllPeople()
+        public async Task UpdatePerson(string personId, Person updatedPerson)
         {
-            // TODO implement GetAllPeople
-            throw new NotImplementedException();
-        }
-
-        public Task<Person> UpdatePerson(string id, Person updatedPerson)
-        {
-            // TODO implement UpdatePerson
-            throw new NotImplementedException();
-        }
-
-        public Task DeletePerson(string id)
-        {
-            // TODO implement DeletePerson
-            throw new NotImplementedException();
+             await _people.ReplaceOneAsync(
+                person => person.PersonId == personId,
+                updatedPerson,
+                new ReplaceOptions {IsUpsert = true}
+            );
         }
     }
 }

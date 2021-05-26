@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -51,20 +52,33 @@ namespace CommentApi
             return comment;
         }
 
-        public Task<IEnumerable<Comment>> GetAllCommentsByPost(string postId)
+        public async Task<Comment> GetComment(string commentId)
         {
-            throw new NotImplementedException();
+            var foundComment = await _comments.FindAsync(
+                comment => comment.CommentId == commentId
+            );
+
+            return foundComment.FirstOrDefault();
         }
 
-        public Task<Comment> UpdateComment(string id, Comment updatedComment)
+        public async Task<SearchCommentResponse> SearchComments(SearchCommentRequest searchCommentRequest)
         {
-            throw new NotImplementedException();
+            var searchResult = await _comments.FindAsync(
+                comment => comment.PostId == searchCommentRequest.PostId
+            );
+
+            return new SearchCommentResponse
+            {
+                Total = searchResult.Current.Count(),
+                Comments = searchResult.Current
+                    .ToList()
+                    .GetRange(searchCommentRequest.From, searchCommentRequest.Size)
+            };
         }
 
-
-        public Task DeleteComment(string commentId)
+        public async Task DeleteComment(string commentId)
         {
-            throw new NotImplementedException();
+            await _comments.DeleteOneAsync(comment => comment.CommentId == commentId);
         }
     }
 }

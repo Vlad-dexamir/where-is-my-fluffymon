@@ -11,10 +11,8 @@ namespace PersonApi
         
         public Task<Person> GetPersonByEmail(string email);
         
-        public Task<IEnumerable<Person>> GetAllPeople();
         
-        public Task<Person> UpdatePerson(string id, Person updatedPerson);
+        public Task UpdatePerson(string personId, Person updatedPerson);
         
-        public Task DeletePerson(string id);
     }
 }

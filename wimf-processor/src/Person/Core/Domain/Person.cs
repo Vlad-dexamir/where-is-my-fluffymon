@@ -1,10 +1,10 @@
 using System.Text.RegularExpressions;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Utils;
 
 namespace PersonApi
 {
-    public class Person
+    public class Person: BaseEntity 
     {
         public static readonly Regex PersonEmailPattern = new(
             @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
@@ -16,10 +16,6 @@ namespace PersonApi
         public const int PasswordMaxLength = 32;
 
 #nullable disable
-        [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public string Id { get; set; }
-
         [BsonElement("personId")] public string PersonId { get; set; }
 
         [BsonElement("firstName")] public string FirstName { get; set; }

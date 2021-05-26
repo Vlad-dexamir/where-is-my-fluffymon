@@ -7,9 +7,9 @@ namespace CommentApi
     {
         public Task<Comment> CreateComment(Comment comment);
 
-        public Task<IEnumerable<Comment>> GetAllCommentsByPost(string postId);
+        public Task<Comment> GetComment(string commentId);
 
-        public Task<Comment> UpdateComment(string id, Comment updatedComment);
+        public Task<SearchCommentResponse> SearchComments(SearchCommentRequest searchCommentRequest);
 
         public Task DeleteComment(string commentId);
     }

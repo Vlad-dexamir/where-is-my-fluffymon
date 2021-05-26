@@ -22,7 +22,6 @@ namespace PostApi
                     PostId = foundPost.PostId,
                     Title = foundPost.Title,
                     Content = foundPost.Content,
-                    PostType = foundPost.PostType,
                     UserId = foundPost.UserId,
                     UserInfo = foundPost.UserInfo,
                     Location = foundPost.Location,

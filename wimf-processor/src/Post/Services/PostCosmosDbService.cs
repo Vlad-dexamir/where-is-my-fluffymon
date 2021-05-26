@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -58,33 +58,36 @@ namespace PostApi
             return foundPost.FirstOrDefault();
         }
 
-        public Task<Post> GetPostByType(string postType)
+        public async Task<SearchPostResponse> SearchPost(SearchPostRequest searchPostRequest)
         {
-            throw new NotImplementedException();
+            var searchResult = await _posts.FindAsync(post =>
+                post.Title.Contains(searchPostRequest.Query)
+                || post.PostId.Contains(searchPostRequest.Query)
+                || post.PostType.Equals(searchPostRequest.PostType)
+                || post.UserId.Equals(searchPostRequest.UserId)
+            );
+
+            return new SearchPostResponse
+            {
+                Total = searchResult.Current.Count(),
+                Posts = searchResult.Current
+                    .ToList()
+                    .GetRange(searchPostRequest.From, searchPostRequest.Size)
+            };
         }
 
-        public async Task<Post> GetPostByUser(string userId)
+        public async Task UpdatePost(string postId, Post updatedPost)
         {
-            var foundPost = await _posts.FindAsync(post => post.UserId == userId);
-
-            return foundPost.FirstOrDefault();
+            await _posts.ReplaceOneAsync(
+                post => post.PostId == postId,
+                updatedPost,
+                new ReplaceOptions {IsUpsert = true}
+            );
         }
 
-        public Task<Post> UpdatePost(string id, Post updatedPost)
+        public async Task DeletePost(string postId)
         {
-            throw new NotImplementedException();
-        }
-
-
-        public Task<IEnumerable<Post>> GetAllPosts()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Task DeletePost(string postId)
-        {
-            throw new NotImplementedException();
+            await _posts.DeleteOneAsync(post => post.PostId == postId);
         }
     }
 }

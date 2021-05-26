@@ -3,13 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Comment.Utils.BuildResponse;
 using CommentApi;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Utils;
 
 namespace Comment.Functions
 
@@ -25,7 +25,7 @@ namespace Comment.Functions
 
         [FunctionName("CreateComment")]
         public async Task<object> CreateCommentHandler(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "create-comment")]
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "comment")]
             HttpRequest req, ILogger log)
         {
             try

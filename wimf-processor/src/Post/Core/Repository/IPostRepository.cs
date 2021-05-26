@@ -9,13 +9,8 @@ namespace PostApi
 
         public Task<Post> GetPost(string postId);
 
-        public Task<Post> GetPostByUser(string userId);
-
-        public Task<Post> GetPostByType(string postType);
-        
-        public Task<IEnumerable<Post>> GetAllPosts();
-
-        public Task<Post> UpdatePost(string id, Post updatedPost);
+        public Task<SearchPostResponse> SearchPost(SearchPostRequest request);
+        public Task UpdatePost(string id, Post updatedPost);
 
         public Task DeletePost(string postId);
     }

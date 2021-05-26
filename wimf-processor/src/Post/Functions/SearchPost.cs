@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -10,35 +10,44 @@ using Utils;
 
 namespace Post.Functions
 {
-    public class GetPost
+    public class SearchPost
     {
         private readonly IPostRepository _postRepository;
 
-        public GetPost(IPostRepository postRepository)
+        public SearchPost(IPostRepository postRepository)
         {
             _postRepository = postRepository;
         }
 
-        [FunctionName("GetPost")]
-        public async Task<object> GetPostHandler(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "post/{postId}")]
-            HttpRequest req, ILogger log, string postId)
+        [FunctionName("SearchPost")]
+        public async Task<object> SearchPostHandler(
+            [HttpTrigger(AuthorizationLevel.Function, "get",
+                Route = "search-post")]
+            HttpRequest req, ILogger log)
         {
             try
             {
-                log.LogInformation("[GET_POST_HANDLER] Retrieving post...");
+                log.LogInformation("[SEARCH_POST_HANDLER] Retrieving posts...");
 
-                GetPostDeps getPostDeps = new GetPostDeps
+                SearchPostDeps searchPostDeps = new SearchPostDeps
                 {
                     PostRepository = _postRepository
                 };
 
-                var post = await GetPostUseCase.Execute(getPostDeps, postId);
+                PostFilters filters = new PostFilters
+                {
+                    UserId = req.Query["userId"],
+                    PostType = req.Query["postType"],
+                    Query = req.Query["query"]
+                };
 
-                log.LogInformation(
-                    $"[GET_POST_HANDLER] Post with postId:${postId} retrieved successfully");
+                var from = int.Parse(req.Query["from"]);
 
-                return BuildResponse.Success(post);
+                var size = int.Parse(req.Query["size"]);
+
+                var result = await SearchPostUseCase.Execute(searchPostDeps, from, size, filters);
+
+                return BuildResponse.Success(result);
             }
             catch (Exception exception)
             {

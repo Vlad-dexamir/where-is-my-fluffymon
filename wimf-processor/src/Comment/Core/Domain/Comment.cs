@@ -1,18 +1,14 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Utils;
 
 namespace CommentApi
 {
-    public class Comment
+    public class Comment: BaseEntity
     {
         public const int MinLength = 2;
         public const int MaxLength = 300;
 
 #nullable disable
-        [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public string Id { get; set; }
-
         [BsonElement("commentId")] public string CommentId { get; set; }
         [BsonElement("postId")] public string PostId { get; set; }
         [BsonElement("userId")] public string UserId { get; set; }

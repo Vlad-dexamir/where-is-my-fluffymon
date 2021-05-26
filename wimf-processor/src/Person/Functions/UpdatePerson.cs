@@ -13,30 +13,30 @@ using Utils;
 
 namespace Person.Functions
 {
-    public class CreatePerson
+    public class UpdatePerson
     {
         private readonly IPersonRepository _personRepository;
 
-        public CreatePerson(IPersonRepository personRepository)
+        public UpdatePerson(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
-
-        [FunctionName("CreatePerson")]
-        public async Task<object> CreatePersonHandler(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "create-person")]
-            HttpRequest req, ILogger log)
+        
+        [FunctionName("UpdatePerson")]
+        public async Task<object> UpdatePersonHandler(
+            [HttpTrigger(AuthorizationLevel.Function, "patch", Route = "person/{personId}")]
+            HttpRequest req, ILogger log, string personId)
         {
             try
             {
-                log.LogInformation("[CREATE_PERSON_HANDLER] Retrieving createPersonRequest...");
+                log.LogInformation("[UPDATE_PERSON_HANDLER] Retrieving updatePersonRequest...");
 
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var createPersonRequest = JsonConvert.DeserializeObject<CreatePersonRequest>(requestBody);
+                var updatePersonRequest = JsonConvert.DeserializeObject<UpdatePersonRequest>(requestBody);
+                
+                log.LogInformation("[UPDATE_PERSON_HANDLER] Validating updatePersonRequest...");
 
-                log.LogInformation("[CREATE_PERSON_HANDLER] Validating createPersonRequest...");
-
-                var validationResult = await new CreatePersonRequestValidator().ValidateAsync(createPersonRequest);
+                var validationResult = await new UpdatePersonRequestValidator().ValidateAsync(updatePersonRequest);
 
                 if (!validationResult.IsValid)
                     return BuildResponse.Failure(
@@ -48,30 +48,30 @@ namespace Person.Functions
                                 Error = e.ErrorMessage
                             }));
 
-                log.LogInformation("[CREATE_PERSON_HANDLER] Creating person...");
+                log.LogInformation("[UPDATE_PERSON_HANDLER] Updating person...");
 
-                CreatePersonDeps createPersonDeps = new CreatePersonDeps
+                UpdatePersonDeps updatePersonDeps = new UpdatePersonDeps
                 {
                     PersonRepository = _personRepository
                 };
 
-                var personJwt = await CreatePersonUseCase.Execute(createPersonDeps, createPersonRequest);
+                var updatedPerson = await UpdatePersonUseCase.Execute(updatePersonDeps, personId , updatePersonRequest);
 
-                log.LogInformation("[CREATE_PERSON_HANDLER] Person created successfully");
+                log.LogInformation("[UPDATE_PERSON_HANDLER] Person updated successfully");
 
-                return BuildResponse.Success(personJwt);
+                return BuildResponse.Success(updatedPerson);
             }
             catch (Exception exception)
             {
                 log.LogError(exception.Message);
 
                 if (exception.Message
-                    .Equals(PersonException.Exceptions[PersonExceptionType.PersonAlreadyExists])
+                    .Equals(PersonException.Exceptions[PersonExceptionType.PersonDoesNotExist])
                 )
 
                     return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error(
                         exception.Message,
-                        PersonExceptionType.PersonAlreadyExists
+                        PersonExceptionType.PersonDoesNotExist
                     ));
 
                 return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error(

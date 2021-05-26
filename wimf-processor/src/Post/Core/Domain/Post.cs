@@ -1,10 +1,10 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using Utils;
 
 namespace PostApi
 {
-    public class Post
+    public class Post: BaseEntity
     {
         
         public const int TitleMinLength = 3;
@@ -12,10 +12,6 @@ namespace PostApi
         public const int ContentMaxLength = 600;
 
 #nullable disable
-        [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public string Id { get; set; }
-
         [BsonElement("postId")] public string PostId { get; set; }
 
         [BsonElement("postType")] public string PostType { get; set; }

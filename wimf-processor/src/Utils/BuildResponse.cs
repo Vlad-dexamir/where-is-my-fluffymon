@@ -1,13 +1,14 @@
-using System.Net;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Person.Utils.BuildResponse
+namespace Utils
 {
+    #nullable enable
     public static class BuildResponse
     {
         public static object Success(object? body)
         {
-            return body != null ? new OkObjectResult(body) : new OkResult();
+            return body != null ? (object) new OkObjectResult(body) : new OkResult();
         }
 
         public static object Failure(HttpStatusCode statusCode, object? body)

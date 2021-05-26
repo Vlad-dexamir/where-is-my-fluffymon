@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,34 +11,32 @@ using Newtonsoft.Json;
 using PostApi;
 using Utils;
 
-
 namespace Post.Functions
-
 {
-    public class CreatePost
+    public class UpdatePost
     {
         private readonly IPostRepository _postRepository;
 
-        public CreatePost(IPostRepository postRepository)
+        public UpdatePost(IPostRepository postRepository)
         {
             _postRepository = postRepository;
         }
 
-        [FunctionName("CreatePost")]
-        public async Task<object> CreatePostHandler(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "post")] 
-            HttpRequest req, ILogger log)
+        [FunctionName("UpdatePost")]
+        public async Task<object> UpdatePostHandler(
+            [HttpTrigger(AuthorizationLevel.Function, "patch", Route = "post/{postId}")]
+            HttpRequest req, ILogger log, string postId)
         {
             try
             {
-                log.LogInformation("[CREATE_POST_HANDLER] Retrieving createPostRequest...");
-
+                log.LogInformation("[UPDATE_POST_HANDLER] Retrieving post...");
+                
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var createPostRequest = JsonConvert.DeserializeObject<CreatePostRequest>(requestBody);
-              
-                log.LogInformation("[CREATE_POST_HANDLER] Validating createPostRequest...");
+                var updatePostRequest = JsonConvert.DeserializeObject<UpdatePostRequest>(requestBody);
+                
+                log.LogInformation("[UPDATE_POST_HANDLER] Validating updatePostRequest...");
 
-                var validationResult = await new CreatePostRequestValidator().ValidateAsync(createPostRequest);
+                var validationResult = await new UpdatePostRequestValidator().ValidateAsync(updatePostRequest);
 
                 if (!validationResult.IsValid)
                     return BuildResponse.Failure(
@@ -50,30 +48,32 @@ namespace Post.Functions
                                 Error = e.ErrorMessage
                             }));
 
-                log.LogInformation("[CREATE_POST_HANDLER] Creating post...");
+                log.LogInformation("[UPDATE_POST_HANDLER] Updating post...");
 
-                CreatePostDeps createPostDeps = new CreatePostDeps
+                
+                UpdatePostDeps updatePostDeps = new UpdatePostDeps
                 {
                     PostRepository = _postRepository
                 };
 
-                var createdPost = await CreatePostUseCase.Execute(createPostDeps, createPostRequest);
-                
-                log.LogInformation("[CREATE_POST_HANDLER] Post created successfully");
+                var updatedPost = await UpdatePostUseCase.Execute(updatePostDeps, postId, updatePostRequest);
 
-                return BuildResponse.Success(createdPost);
+                log.LogInformation(
+                    $"[UPDATE_POST_HANDLER] Post with postId:${postId} updated successfully");
+
+                return BuildResponse.Success(updatedPost);
             }
             catch (Exception exception)
             {
                 log.LogError(exception.Message);
 
                 if (exception.Message
-                    .Equals(PostException.Exceptions[PostExceptionType.PostAlreadyExists])
+                    .Equals(PostException.Exceptions[PostExceptionType.PostDoesNotExist])
                 )
 
                     return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error(
                         exception.Message,
-                        PostExceptionType.PostAlreadyExists
+                        PostExceptionType.PostDoesNotExist
                     ));
 
                 return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error(

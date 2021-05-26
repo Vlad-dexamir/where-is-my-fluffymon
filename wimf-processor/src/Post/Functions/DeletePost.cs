@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -10,35 +10,35 @@ using Utils;
 
 namespace Post.Functions
 {
-    public class GetPost
+    public class DeletePost
     {
         private readonly IPostRepository _postRepository;
 
-        public GetPost(IPostRepository postRepository)
+        public DeletePost(IPostRepository postRepository)
         {
             _postRepository = postRepository;
         }
 
-        [FunctionName("GetPost")]
-        public async Task<object> GetPostHandler(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "post/{postId}")]
+        [FunctionName("DeletePost")]
+        public async Task<object> DeletePostHandler(
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "post/{postId}")]
             HttpRequest req, ILogger log, string postId)
         {
             try
             {
-                log.LogInformation("[GET_POST_HANDLER] Retrieving post...");
+                log.LogInformation("[DELETE_POST_HANDLER] Deleting post...");
 
-                GetPostDeps getPostDeps = new GetPostDeps
+                DeletePostDeps deletePostDeps = new DeletePostDeps
                 {
                     PostRepository = _postRepository
                 };
 
-                var post = await GetPostUseCase.Execute(getPostDeps, postId);
+                await DeletePostUseCase.Execute(deletePostDeps, postId);
 
                 log.LogInformation(
-                    $"[GET_POST_HANDLER] Post with postId:${postId} retrieved successfully");
+                    $"[DELETE_POST_HANDLER] Post with postId:${postId} deleted successfully");
 
-                return BuildResponse.Success(post);
+                return BuildResponse.Success(null);
             }
             catch (Exception exception)
             {

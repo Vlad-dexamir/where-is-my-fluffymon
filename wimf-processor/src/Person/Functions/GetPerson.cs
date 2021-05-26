@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Person.Utils.BuildResponse;
 using PersonApi;
+using Utils;
 
 namespace Person.Functions
 {

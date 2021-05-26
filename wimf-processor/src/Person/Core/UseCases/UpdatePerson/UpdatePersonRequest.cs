@@ -1,4 +1,5 @@
 using FluentValidation;
+using Utils;
 
 namespace PersonApi
 {
@@ -22,25 +23,12 @@ namespace PersonApi
         public UpdatePersonRequestValidator()
         {
             RuleFor(request => request.Updates).NotEmpty().NotNull();
-            
-            RuleFor(request => request.Updates.LastName.Action).Equal(UpdateActionType.Put);
-            RuleFor(request=>request.Updates.LastName.Value)
-                .NotNull()
-                .NotEmpty()
-                .MinimumLength(Person.NameMinLength)
-                .MaximumLength(Person.NameMaxLength)
-                .WithMessage(PersonException.Exceptions[PersonExceptionType.PersonLastNameIsInvalid]);
-
-            RuleFor(request => request.Updates.Password.Action).Equal(UpdateActionType.Put);
-            RuleFor(request=>request.Updates.Password.Value)
-                .NotNull()
-                .NotEmpty()
-                .MinimumLength(Person.PasswordMinLength)
-                .MaximumLength(Person.PasswordMaxLength)
-                .WithMessage(PersonException.Exceptions[PersonExceptionType.PersonPasswordIsInvalid]);
-
-            RuleFor(request => request.Updates.Location.Action).Equal(UpdateActionType.Put);
-            RuleFor(request => request.Updates.Location.Value).NotNull().NotEmpty();
+            RuleFor(request => request.Updates.Password.Action)
+                .NotEqual(UpdateActionType.Delete);
+            RuleFor(request => request.Updates.LastName.Action)
+                .NotEqual(UpdateActionType.Delete);
+            RuleFor(request => request.Updates.Location.Action)
+                .NotEqual(UpdateActionType.Delete);
         }
     }
 }

@@ -11,7 +11,8 @@
         public const string PostTypeIsRequired = "PostTypeIsRequired";
         public const string PostLocationIsRequired = "PostLocationIsRequired";
         public const string UserIdIsRequired = "UserIdIsRequired";
-        public const string CreatedAtIsRequired = "CreatedAtIsRequired";
         public const string PostDoesNotExist = "PostDoesNotExist";
+        public const string SearchPostRequestInvalid = "SearchPostRequestInvalid";
+        
     }
 }

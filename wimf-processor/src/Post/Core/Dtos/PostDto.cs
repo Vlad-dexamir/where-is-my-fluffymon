@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Utils;
 
 namespace PostApi
 {
@@ -9,7 +10,7 @@ namespace PostApi
         public string PostType { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public UserLocation Location { get; set; }
+        public Location Location { get; set; }
         public string UserId { get; set; }
         public UserInfo UserInfo { get; set; }
         public IEnumerable<string> Attachements { get; set; }
@@ -17,5 +18,7 @@ namespace PostApi
         
 #nullable enable
         public long? UpdatedAt { get; set; }
+        
+        public int? Reward { get; set; }
     }
 }

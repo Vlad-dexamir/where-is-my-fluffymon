@@ -3,22 +3,22 @@ using Utils;
 
 namespace PersonApi
 {
-    public class UpdatePersonRequestUpdates
+    public class PersonUpdates
     {
         public UpdateAction<string>? LastName { get; set; }
         public UpdateAction<string>? Password { get; set; }
         public UpdateAction<string>? PhoneNumber { get; set; }
         public UpdateAction<string>? ProfilePicture { get; set; }
-        public UpdateAction<PersonLocation>? Location { get; set; }
+        public UpdateAction<Location>? Location { get; set; }
     }
 
     public class UpdatePersonRequest
     {
 #nullable disable
-        public UpdatePersonRequestUpdates Updates { get; set; }
+        public PersonUpdates Updates { get; set; }
     }
 
-    public class UpdatePersonRequestValidator : AbstractValidator<UpdatePersonRequest>
+    public class UpdatePersonRequestValidator : Validator<UpdatePersonRequest>
     {
         public UpdatePersonRequestValidator()
         {

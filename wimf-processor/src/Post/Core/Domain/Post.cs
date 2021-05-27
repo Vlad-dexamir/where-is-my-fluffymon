@@ -20,7 +20,7 @@ namespace PostApi
 
         [BsonElement("content")] public string Content { get; set; }
 
-        [BsonElement("location")] public UserLocation Location { get; set; }
+        [BsonElement("location")] public Location Location { get; set; }
 
         [BsonElement("userId")] public string UserId { get; set; }
         
@@ -32,6 +32,8 @@ namespace PostApi
         [BsonElement("attachements")] public IEnumerable<string>? Attachements { get; set; }
         
         [BsonElement("updatedAt")] public long? UpdatedAt { get; set; }
+        
+        [BsonElement("reward")] public int? Reward { get; set; }
         
     }
 }

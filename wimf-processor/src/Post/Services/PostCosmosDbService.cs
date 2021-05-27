@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using Utils;
 
 namespace PostApi
 {
@@ -60,19 +60,32 @@ namespace PostApi
 
         public async Task<SearchPostResponse> SearchPost(SearchPostRequest searchPostRequest)
         {
-            var searchResult = await _posts.FindAsync(post =>
-                post.Title.Contains(searchPostRequest.Query)
-                || post.PostId.Contains(searchPostRequest.Query)
-                || post.PostType.Equals(searchPostRequest.PostType)
-                || post.UserId.Equals(searchPostRequest.UserId)
-            );
+            bool isAnyFilter = searchPostRequest.Filters.Query != null
+                               || searchPostRequest.Filters.PostType != null
+                               || searchPostRequest.Filters.UserId != null
+                               || searchPostRequest.Filters.Location != null;
+
+            var filters = isAnyFilter
+                ? Builders<Post>.Filter.Or(
+                    PostFilters.CreateFilterByQuery(searchPostRequest.Filters.Query ?? string.Empty),
+                    PostFilters.CreateFilterByPostType(searchPostRequest.Filters.PostType ?? string.Empty),
+                    PostFilters.CreateFilterByUserId(searchPostRequest.Filters.UserId ?? string.Empty),
+                    PostFilters.CreateFilterByLocation(searchPostRequest.Filters.Location ?? new Location())
+                )
+                : FilterDefinition<Post>.Empty;
+
+            var searchResult = _posts.Find(filters);
+
+            var totalResults = await searchResult.CountDocumentsAsync();
+            var posts = await searchResult
+                .Skip(searchPostRequest.From)
+                .Limit(searchPostRequest.Size)
+                .ToListAsync();
 
             return new SearchPostResponse
             {
-                Total = searchResult.Current.Count(),
-                Posts = searchResult.Current
-                    .ToList()
-                    .GetRange(searchPostRequest.From, searchPostRequest.Size)
+                Total = totalResults,
+                Posts = posts,
             };
         }
 

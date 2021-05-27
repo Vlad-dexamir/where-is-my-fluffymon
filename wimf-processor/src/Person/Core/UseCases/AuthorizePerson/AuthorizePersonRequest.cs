@@ -1,4 +1,5 @@
 using FluentValidation;
+using Utils;
 
 namespace PersonApi
 {
@@ -9,7 +10,7 @@ namespace PersonApi
         public string Password { get; set; }
     }
 
-    public class AuthorizePersonRequestValidator : AbstractValidator<AuthorizePersonRequest>
+    public class AuthorizePersonRequestValidator : Validator<AuthorizePersonRequest>
     {
         public AuthorizePersonRequestValidator()
         {

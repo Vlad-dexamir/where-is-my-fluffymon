@@ -27,23 +27,35 @@ namespace Post.Functions
         {
             try
             {
-                log.LogInformation("[SEARCH_POST_HANDLER] Retrieving posts...");
+                log.LogInformation("[SEARCH_POST_HANDLER] Parsing params...");
 
                 SearchPostDeps searchPostDeps = new SearchPostDeps
                 {
                     PostRepository = _postRepository
                 };
 
+                var isLocationFilter =
+                    !string.IsNullOrEmpty(req.Query["lat"]) && !string.IsNullOrEmpty(req.Query["lng"]);
+
                 PostFilters filters = new PostFilters
                 {
                     UserId = req.Query["userId"],
                     PostType = req.Query["postType"],
-                    Query = req.Query["query"]
+                    Query = req.Query["query"],
+                    Location = isLocationFilter
+                        ? new Location
+                        {
+                            Lat = int.Parse(req.Query["lat"]),
+                            Lng = int.Parse(req.Query["lng"])
+                        }
+                        : null
                 };
 
                 var from = int.Parse(req.Query["from"]);
 
                 var size = int.Parse(req.Query["size"]);
+
+                log.LogInformation("[SEARCH_POST_HANDLER] Retrieving posts...");
 
                 var result = await SearchPostUseCase.Execute(searchPostDeps, from, size, filters);
 
@@ -56,11 +68,21 @@ namespace Post.Functions
                 if (exception.Message
                     .Equals(PostException.Exceptions[PostExceptionType.PostDoesNotExist])
                 )
-
+                {
                     return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error(
                         exception.Message,
                         PostExceptionType.PostDoesNotExist
                     ));
+                }
+
+                if (exception.Message
+                    .Equals(PostException.Exceptions[PostExceptionType.SearchPostRequestInvalid]))
+                {
+                    return BuildResponse.Failure(HttpStatusCode.BadRequest, new Error(
+                        exception.Message,
+                        PostExceptionType.SearchPostRequestInvalid
+                    ));
+                }
 
                 return BuildResponse.Failure(HttpStatusCode.InternalServerError, new Error(
                     exception.Message

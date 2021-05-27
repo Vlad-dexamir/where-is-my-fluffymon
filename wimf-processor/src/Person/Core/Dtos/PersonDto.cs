@@ -1,3 +1,5 @@
+using Utils;
+
 namespace PersonApi
 {
     public class PersonDto
@@ -7,7 +9,7 @@ namespace PersonApi
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public PersonLocation Location { get; set; }
+        public Location Location { get; set; }
         public bool IsAdmin { get; set; }
 #nullable enable
         public string? PhoneNumber { get; set; }

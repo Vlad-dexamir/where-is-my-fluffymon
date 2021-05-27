@@ -17,7 +17,7 @@ namespace PersonApi
 
                 var updatedPerson = foundPerson;
 
-                UpdatePersonRequestUpdates updates = updatePersonRequest.Updates;
+                PersonUpdates updates = updatePersonRequest.Updates;
 
                 if (updates.LastName is {Action: UpdateActionType.Put})
                     updatedPerson.LastName = updates.LastName.Value;

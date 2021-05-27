@@ -1,4 +1,5 @@
 using FluentValidation;
+using Utils;
 
 namespace PersonApi
 {
@@ -9,13 +10,13 @@ namespace PersonApi
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public PersonLocation Location { get; set; }
+        public Location Location { get; set; }
 #nullable enable
         public string? PhoneNumber { get; set; }
         public string? ProfilePicture { get; set; }
     }
 
-    public class CreatePersonRequestValidator : AbstractValidator<CreatePersonRequest>
+    public class CreatePersonRequestValidator : Validator<CreatePersonRequest>
     {
         public CreatePersonRequestValidator()
         {

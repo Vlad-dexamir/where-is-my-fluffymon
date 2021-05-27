@@ -26,7 +26,7 @@ namespace PersonApi
 
         [BsonElement("password")] public string Password { get; set; }
 
-        [BsonElement("location")] public PersonLocation Location { get; set; }
+        [BsonElement("location")] public Location Location { get; set; }
 
         [BsonElement("isAdmin")] public bool IsAdmin { get; set; } = false;
 #nullable enable

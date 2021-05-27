@@ -25,7 +25,8 @@ namespace PostApi
                     UserId = createPostRequest.UserId,
                     UserInfo = createPostRequest.UserInfo,
                     Attachements = createPostRequest.Attachements,
-                    CreatedAt = UtcNow.ToUnixTimeSeconds()
+                    CreatedAt = UtcNow.ToUnixTimeSeconds(),
+                    Reward = createPostRequest.Reward
                 };
 
                 var createdPost = await postRepository.CreatePost(postToCreate);
@@ -41,6 +42,7 @@ namespace PostApi
                     UserInfo = createdPost.UserInfo,
                     Attachements = createdPost.Attachements,
                     CreatedAt = createdPost.CreatedAt,
+                    Reward = createdPost.Reward
                 };
             };
     }

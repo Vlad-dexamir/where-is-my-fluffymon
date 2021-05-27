@@ -31,23 +31,10 @@ namespace Person.Functions
             {
                 log.LogInformation("[AUTHORIZE_PERSON_HANDLER] Retrieving authorizePersonRequest...");
 
-                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var authorizePersonRequest = JsonConvert.DeserializeObject<AuthorizePersonRequest>(requestBody);
+                var validator = new AuthorizePersonRequestValidator();
 
-                log.LogInformation("[AUTHORIZE_PERSON_HANDLER] Validating authorizePersonRequest...");
-
-                var validationResult =
-                    await new AuthorizePersonRequestValidator().ValidateAsync(authorizePersonRequest);
-
-                if (!validationResult.IsValid)
-                    return BuildResponse.Failure(
-                        HttpStatusCode.BadRequest,
-                        validationResult.Errors.Select(
-                            e => new
-                            {
-                                Field = e.PropertyName,
-                                Error = e.ErrorMessage
-                            }));
+                var authorizePersonRequest = await RequestInterceptor<AuthorizePersonRequest>
+                    .InterceptBody(req.Body, validator) as AuthorizePersonRequest;
 
                 log.LogInformation("[AUTHORIZE_PERSON_HANDLER] Authorizing person....");
 

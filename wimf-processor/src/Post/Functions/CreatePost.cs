@@ -41,14 +41,7 @@ namespace Post.Functions
                 var validationResult = await new CreatePostRequestValidator().ValidateAsync(createPostRequest);
 
                 if (!validationResult.IsValid)
-                    return BuildResponse.Failure(
-                        HttpStatusCode.BadRequest,
-                        validationResult.Errors.Select(
-                            e => new
-                            {
-                                Field = e.PropertyName,
-                                Error = e.ErrorMessage
-                            }));
+
 
                 log.LogInformation("[CREATE_POST_HANDLER] Creating post...");
 
